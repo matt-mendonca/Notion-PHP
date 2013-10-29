@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /web/
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+#Route error docs through index.php
+ErrorDocument 400 /web/index.php
+ErrorDocument 401 /web/index.php
+ErrorDocument 403 /web/index.php
+ErrorDocument 404 /web/index.php
+ErrorDocument 500 /web/index.php
