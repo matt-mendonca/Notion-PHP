@@ -1,10 +1,10 @@
 route: 
-    /
+    /about
 template:
     index.twig
 page_title:
-    Hello World
+    About
 content_title:
-    Hello
+    About Me
 content:
-    "<p>Welcome!</p>"
+    "<p>I'm pretty cool</p>"

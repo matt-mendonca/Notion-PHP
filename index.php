@@ -23,10 +23,20 @@
     foreach ($page_registery as $key => $page_file):
         $page = Yaml::parse("content/{$page_file}"); 
 
+        /*  
+            Add trailing slash if not present.
+            This will match the non trailing slash and trailing slash routes.
+            E.g. /about/ will match /about/ and 301 redirect /about to /about/
+            The oppoiste is not true. 
+        */
+            $page['route'] = substr($page['route'], -1) === '/' ? 
+                $page['route'] : 
+                $page['route'] . '/';
+        
         // Define routes
-        $app->get($page['route'], function () use ($app, $page) {
-            return $app['twig']->render($page['template'], $page);
-        });
+            $app->get($page['route'], function () use ($app, $page) {
+                return $app['twig']->render($page['template'], $page);
+            });
     endforeach;
 
 // Error handling
