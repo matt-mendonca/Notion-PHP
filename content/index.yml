@@ -1,3 +1,7 @@
+route: 
+    /
+template:
+    index.twig
 page_title:
     Hello World
 content_title:
