@@ -42,7 +42,7 @@ use Silex\EventListener\StringToResponseListener;
  */
 class Application extends \Pimple implements HttpKernelInterface, TerminableInterface
 {
-    const VERSION = '1.1.1';
+    const VERSION = '1.1.2';
 
     const EARLY_EVENT = 512;
     const LATE_EVENT  = -512;
@@ -267,6 +267,11 @@ class Application extends \Pimple implements HttpKernelInterface, TerminableInte
      */
     public function on($eventName, $callback, $priority = 0)
     {
+        if ($this->booted) {
+            $this['dispatcher']->addListener($eventName, $callback, $priority);
+            return;
+        }
+
         $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) use ($callback, $priority, $eventName) {
             $dispatcher->addListener($eventName, $callback, $priority);
 
@@ -477,7 +482,7 @@ class Application extends \Pimple implements HttpKernelInterface, TerminableInte
     /**
      * Handles the request and delivers the response.
      *
-     * @param Request $request Request to process
+     * @param Request|null $request Request to process
      */
     public function run(Request $request = null)
     {

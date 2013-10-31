@@ -20,6 +20,7 @@
 
 // Load pages
     $page_registery = ContentHelper::getDirectoryTree(new DirectoryIterator('content'));
+    
     foreach ($page_registery as $key => $page_file):
         $page = Yaml::parse("content/{$page_file}"); 
 
