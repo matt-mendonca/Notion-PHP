@@ -10,13 +10,12 @@
         'twig.path' => __DIR__.'/templates',
     ));
 
-// Debug 
-    /*
-    $app['debug'] = true;
-    error_reporting(E_ALL);
-    ini_set('display_errors', TRUE);
-    ini_set('display_startup_errors', TRUE);
-    */
+// Debug  
+    // $app['debug'] = true;
+    // error_reporting(E_ALL);
+    // ini_set('display_errors', TRUE);
+    // ini_set('display_startup_errors', TRUE);
+    
 
 // Load pages
     $page_registery = ContentHelper::getDirectoryTree(new DirectoryIterator('content'));
@@ -24,19 +23,19 @@
     foreach ($page_registery as $key => $page_file):
         $page = Yaml::parse("content/{$page_file}"); 
 
-        /*  
-            Add trailing slash if not present.
-            This will match the non trailing slash and trailing slash routes.
-            E.g. /about/ will match /about/ and 301 redirect /about to /about/
-            The oppoiste is not true. 
-        */
+        // Add trailing slash if not present.
             $page['route'] = substr($page['route'], -1) === '/' ? 
                 $page['route'] : 
                 $page['route'] . '/';
         
         // Define routes
             $app->get($page['route'], function () use ($app, $page) {
-                return $app['twig']->render($page['template'], $page);
+                // Check if PJAX request, send pjaxt template
+                if($app['request']->headers->get('X-PJAX')):
+                    return $app['twig']->render("x-pjax.{$page['template']}", $page);
+                else:
+                    return $app['twig']->render($page['template'], $page);
+                endif;
             });
     endforeach;
 

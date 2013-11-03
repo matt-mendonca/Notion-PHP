@@ -4,7 +4,7 @@ $.noConflict();
 
     appJS.main = function() {
         var init = function() {
-            console.log('app js init');
+             $(document).pjax('.pjax-link', '#pjax-container');
         };
 
         return {

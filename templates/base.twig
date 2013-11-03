@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% include 'header.twig' %}
+
+    <body>
+        <div class="row">
+            <div class="large-12 columns">
+                <a class="button pjax-link" href='/'>Home</a>
+                <a class="button pjax-link" href='/about/'>About</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns" id="pjax-container">
+                {% include 'x-pjax.base.twig' %}
+            </div>
+        </div>
+
+        {% include 'footer.twig' %}
+    </body>
+</html>

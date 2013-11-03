@@ -1,7 +1,7 @@
 route: 
     /
 template:
-    index.twig
+    base.twig
 page_title:
     Hello World
 content_title:
